@@ -1,11 +1,14 @@
 package com.phuket.tour.audiorecorder;
 
+import com.phuket.tour.studio.LameMp3Encoder;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,20 +22,28 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class AudioRecorderActivity extends AppCompatActivity {
+    private final String TAG = "AudioRecorderActivity";
     private TextView recorder_time_tip;
     private Button recorder_btn;
+    private Button mp3_btn;
     private static final int DISPLAY_RECORDING_TIME_FLAG = 100000;
     private final int record = R.string.record;
     private final int stop = R.string.stop;
+    private final int to_mp3_sucess = R.string.to_mp3_sucess;
 
     private boolean isRecording = false;
     private AudioRecordRecorderService recorderService;
     private final String outputPath = "vocal.pcm";
+    private final String mp3OutputPath = "vocal.mp3";
     //"/mnt/sdcard/vocal.pcm";
     private Timer timer;
     private int recordingTimeInSecs = 0;
     private TimerTask displayRecordingTimeTask;
     private Handler mHandler;
+
+    static {
+        System.loadLibrary("audioencoder");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +68,7 @@ public class AudioRecorderActivity extends AppCompatActivity {
     private void findView() {
         recorder_time_tip = (TextView) findViewById(R.id.recorder_time_tip);
         recorder_btn = (Button) findViewById(R.id.recorder_btn);
+        mp3_btn = (Button) findViewById(R.id.mp3_btn);
     }
 
     private void initView() {
@@ -97,6 +109,29 @@ public class AudioRecorderActivity extends AppCompatActivity {
                     Toast.makeText(AudioRecorderActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
+        });
+        mp3_btn.setOnClickListener(v -> {
+            if (isRecording) {
+                return;
+            }
+            LameMp3Encoder encoder = new LameMp3Encoder();
+            String pcmPath = getFilesDir().getAbsolutePath() + "/" + outputPath;
+            int audioChannels = 1;
+            int bitRate = 128 * 1024;
+            int sampleRate = 44100;
+            String mp3Path = getFilesDir().getAbsolutePath() + "/" + mp3OutputPath;
+            Log.i(TAG, "input pcm path is " + pcmPath);
+            Log.i(TAG, "output mp3 path is " + mp3Path);
+            int ret = encoder.init(pcmPath, audioChannels, bitRate, sampleRate, mp3Path);
+            if(ret >= 0) {
+                Log.i(TAG, "start Encode Mp3 Success");
+                encoder.encode();
+                encoder.destroy();
+                Log.i(TAG, "Encode Mp3 Success");
+            } else {
+                Log.i(TAG, "Encoder Initialized Failed...");
+            }
+            recorder_time_tip.setText(getString(to_mp3_sucess));
         });
     }
 }
