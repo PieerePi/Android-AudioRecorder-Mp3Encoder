@@ -15,7 +15,7 @@ public:
 
 	int Init(const char* pcmFilePath, const char *mp3FilePath, int sampleRate, int channels, int bitRate);
 	void Encode();
-	void Destory();
+	void Destroy();
 };
 
 #endif //PHUKET_TOUR_MP3_ENCODER

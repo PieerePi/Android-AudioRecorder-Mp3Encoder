@@ -48,7 +48,7 @@ void Mp3Encoder::Encode() {
 	delete[] mp3_buffer;
 }
 
-void Mp3Encoder::Destory() {
+void Mp3Encoder::Destroy() {
 	if(pcmFile) {
 		fclose(pcmFile);
 	}

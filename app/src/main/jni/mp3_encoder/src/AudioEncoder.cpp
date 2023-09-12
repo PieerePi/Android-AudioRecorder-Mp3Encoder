@@ -27,7 +27,7 @@ JNIEXPORT void JNICALL Java_com_phuket_tour_studio_LameMp3Encoder_encode(JNIEnv 
 
 JNIEXPORT void JNICALL Java_com_phuket_tour_studio_LameMp3Encoder_destroy(JNIEnv * env, jobject obj) {
 	if(NULL != encoder) {
-		encoder->Destory();
+		encoder->Destroy();
 		delete encoder;
 		encoder = NULL;
 	}
