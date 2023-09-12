@@ -3,12 +3,12 @@ include $(CLEAR_VARS)
 
 LOCAL_CFLAGS += -D__STDC_CONSTANT_MACROS
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/3rdparty/lame/include
+#LOCAL_C_INCLUDES := $(LOCAL_PATH)/3rdparty/lame/include
 
-LOCAL_SRC_FILES = ./mp3_encoder/jni/AudioEncoder.cpp
+LOCAL_SRC_FILES = ./mp3_encoder/src/AudioEncoder.cpp
 
 LOCAL_STATIC_LIBRARIES := mp3_encoder
-LOCAL_STATIC_LIBRARIES += mp3lame
+#LOCAL_STATIC_LIBRARIES += mp3lame
 
 LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -llog 
 LOCAL_LDLIBS += -lz 

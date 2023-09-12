@@ -1,5 +1,5 @@
-#include "./com_phuket_tour_studio_LameMp3Encoder.h"
-#include "./mp3_encoder.h"
+#include "../include/com_phuket_tour_studio_LameMp3Encoder.h"
+#include "../include/mp3_encoder.h"
 #include "../../common/CommonTools.h"
 
 #define LOG_TAG "LameMp3Encoder"

@@ -1,4 +1,4 @@
-#include "mp3_encoder.h"
+#include "../include/mp3_encoder.h"
 
 Mp3Encoder::Mp3Encoder() {
 }
