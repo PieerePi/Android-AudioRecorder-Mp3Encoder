@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_CFLAGS += -D__STDC_CONSTANT_MACROS
+#LOCAL_CFLAGS += -D__STDC_CONSTANT_MACROS
 
 #LOCAL_C_INCLUDES := $(LOCAL_PATH)/3rdparty/lame/include
 

@@ -15,8 +15,24 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        ndk {
-            abiFilters "armeabi-v7a", "arm64-v8a"
+
+        // ndkBuild
+//        externalNativeBuild {
+//            ndkBuild {
+////                https://developer.android.google.cn/reference/tools/gradle-api/7.1/com/android/build/api/dsl/ExternalNativeNdkBuildOptions
+//                abiFilters "armeabi-v7a", "arm64-v8a"
+//            }
+//        }
+
+        // cmake
+        externalNativeBuild {
+            cmake {
+//                https://developer.android.google.cn/reference/tools/gradle-api/7.1/com/android/build/api/dsl/ExternalNativeCmakeOptions
+                abiFilters "armeabi-v7a", "arm64-v8a"
+//                cFlags "-D__STDC_FORMAT_MACROS"
+                cppFlags "-fexceptions", "-frtti"
+//                targets "audioencoder"
+            }
         }
     }
 
@@ -32,9 +48,27 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    // 没有什么用了
+//    sourceSets {
+//        main {
+//            jniLibs.srcDir 'src/main/libs' // Enable to use libs
+//            jni.srcDirs 'src/main/jni' // Enable the automatic ndk-build
+//        }
+//    }
+
+    // ndkBuild
+//    externalNativeBuild {
+////        https://developer.android.google.cn/reference/tools/gradle-api/7.1/com/android/build/api/dsl/NdkBuild
+//        ndkBuild {
+//            path "src/main/jni/Android.mk"
+//        }
+//    }
+
+    // cmake
     externalNativeBuild {
-        ndkBuild {
-            path "src/main/jni/Android.mk"
+//        https://developer.android.google.cn/reference/tools/gradle-api/7.1/com/android/build/api/dsl/Cmake
+        cmake {
+            path "src/main/jni/CMakeLists.txt"
         }
     }
 }
