@@ -18,6 +18,6 @@
     - [ExternalNativeNdkBuildOptions](https://developer.android.google.cn/reference/tools/gradle-api/7.1/com/android/build/api/dsl/ExternalNativeNdkBuildOptions)
     - [NdkBuild](https://developer.android.google.cn/reference/tools/gradle-api/7.1/com/android/build/api/dsl/NdkBuild)
 
-- 增加了LameMP3Encoder需要的PCM源为单通道的支持，当然这样转换后的MP3也是单通道的
+- 增加了LameMP3Encoder需要的PCM源为单通道的支持，当然这样转换后的MP3也是单通道的；增加lame_encode_flush处理
 
-- 录制的PCM和转换后的MP3文件在应用专属存储空间/data/data/com.phuket.tour.audiorecorder/files目录下，需要使用Device Manager -> Device File Explorer来导出
+- 录制的PCM和转换后的MP3文件在应用专属存储空间/data/data/com.phuket.tour.audiorecorder/files目录下，需要使用Device File Explorer来导出

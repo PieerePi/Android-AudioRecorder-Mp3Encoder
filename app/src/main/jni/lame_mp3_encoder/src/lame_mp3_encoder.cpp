@@ -6,8 +6,9 @@ LameMp3Encoder::LameMp3Encoder() {
 LameMp3Encoder::~LameMp3Encoder() {
 }
 
-int LameMp3Encoder::Init(const char *pcmFilePath, const char *mp3FilePath, int sampleRate, int channels,
-                         int bitRate) {
+int
+LameMp3Encoder::Init(const char *pcmFilePath, const char *mp3FilePath,
+                     int sampleRate, int channels, int bitRate) {
     int ret = -1;
     if (channels != 1 && channels != 2) {
         return ret;
@@ -61,6 +62,8 @@ void LameMp3Encoder::Encode() {
                                            mp3_buffer, bufferSize);
         fwrite(mp3_buffer, 1, wroteSize, mp3File);
     }
+    int wroteSize = lame_encode_flush(lameClient, mp3_buffer, bufferSize);
+    fwrite(mp3_buffer, 1, wroteSize, mp3File);
     delete[] buffer;
     delete[] leftBuffer;
     if (rightBuffer != NULL)
