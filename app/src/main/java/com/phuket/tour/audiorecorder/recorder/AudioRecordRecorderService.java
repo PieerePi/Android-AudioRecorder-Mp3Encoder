@@ -26,7 +26,7 @@ public class AudioRecordRecorderService {
 
     private int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
     public static int SAMPLE_RATE_IN_HZ = 44100;
-    private final static int CHANNEL_CONFIGURATION = AudioFormat.CHANNEL_IN_STEREO;
+    public final static int CHANNEL_CONFIGURATION = AudioFormat.CHANNEL_IN_MONO;
     private final static int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
 
     private int bufferSizeInBytes = 0;

@@ -4,6 +4,7 @@ import com.phuket.tour.studio.LameMp3Encoder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.AudioFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -81,11 +82,11 @@ public class AudioRecorderActivity extends AppCompatActivity {
             if (isRecording) {
                 isRecording = false;
                 recorder_btn.setText(getString(record));
+                displayRecordingTimeTask.cancel();
+                timer.cancel();
                 recordingTimeInSecs = 0;
                 recorderService.stop();
                 mHandler.sendEmptyMessage(DISPLAY_RECORDING_TIME_FLAG);
-                displayRecordingTimeTask.cancel();
-                timer.cancel();
             } else {
                 isRecording = true;
                 recorder_btn.setText(getString(stop));
@@ -116,7 +117,15 @@ public class AudioRecorderActivity extends AppCompatActivity {
             }
             LameMp3Encoder encoder = new LameMp3Encoder();
             String pcmPath = getFilesDir().getAbsolutePath() + "/" + outputPath;
-            int audioChannels = 1;
+            int audioChannels;
+            if (AudioRecordRecorderService.CHANNEL_CONFIGURATION == AudioFormat.CHANNEL_IN_MONO) {
+                audioChannels = 1;
+            } else if (AudioRecordRecorderService.CHANNEL_CONFIGURATION == AudioFormat.CHANNEL_IN_STEREO) {
+                audioChannels = 2;
+            } else {
+                Log.e(TAG, "Only support mono and stereo pcm...");
+                return;
+            }
             int bitRate = 128 * 1024;
             int sampleRate = 44100;
             String mp3Path = getFilesDir().getAbsolutePath() + "/" + mp3OutputPath;
@@ -124,7 +133,7 @@ public class AudioRecorderActivity extends AppCompatActivity {
             Log.i(TAG, "output mp3 path is " + mp3Path);
             int ret = encoder.init(pcmPath, audioChannels, bitRate, sampleRate, mp3Path);
             if(ret >= 0) {
-                Log.i(TAG, "start Encode Mp3 Success");
+                Log.i(TAG, "Start Encode Mp3 Success");
                 encoder.encode();
                 encoder.destroy();
                 Log.i(TAG, "Encode Mp3 Success");

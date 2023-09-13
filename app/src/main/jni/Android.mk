@@ -10,9 +10,10 @@ LOCAL_SRC_FILES = ./mp3_encoder/src/AudioEncoder.cpp
 LOCAL_STATIC_LIBRARIES := mp3_encoder
 #LOCAL_STATIC_LIBRARIES += mp3lame
 
-LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -llog 
-LOCAL_LDLIBS += -lz 
-LOCAL_LDLIBS += -landroid
+#LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -llog
+LOCAL_LDLIBS := -llog
+#LOCAL_LDLIBS += -lz
+#LOCAL_LDLIBS += -landroid
 #LOCAL_LDLIBS += -L$(LOCAL_PATH)/3rdparty/lame/lib -lmp3lame
 
 LOCAL_MODULE := libaudioencoder
