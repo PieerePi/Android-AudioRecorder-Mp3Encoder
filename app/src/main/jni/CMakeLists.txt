@@ -4,8 +4,8 @@ set(target audioencoder) # 设置环境变量的名称（target）及其取值�
 project(${target}) # 指定项目的名称
 
 include_directories(3rdparty/lame/include)
-file(GLOB srcs mp3_encoder/src/*.cpp) # 把所有cpp文件和c文件都放入名称为srcs的集合中
-file(GLOB hdrs mp3_encoder/include/*.h) # 把所有hpp文件和h文件都放入名称为hdrs的集合中
+file(GLOB srcs lame_mp3_encoder/src/*.cpp) # 把所有cpp文件和c文件都放入名称为srcs的集合中
+file(GLOB hdrs lame_mp3_encoder/include/*.h) # 把所有hpp文件和h文件都放入名称为hdrs的集合中
 
 #if(${CMAKE_ANDROID_ARCH_ABI} MATCHES armeabi-v7a)
 #    message("do it for armeabi-v7a")

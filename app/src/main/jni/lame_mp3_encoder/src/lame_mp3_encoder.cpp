@@ -1,13 +1,13 @@
-#include "../include/mp3_encoder.h"
+#include "../include/lame_mp3_encoder.h"
 
-Mp3Encoder::Mp3Encoder() {
+LameMp3Encoder::LameMp3Encoder() {
 }
 
-Mp3Encoder::~Mp3Encoder() {
+LameMp3Encoder::~LameMp3Encoder() {
 }
 
-int Mp3Encoder::Init(const char *pcmFilePath, const char *mp3FilePath, int sampleRate, int channels,
-                     int bitRate) {
+int LameMp3Encoder::Init(const char *pcmFilePath, const char *mp3FilePath, int sampleRate, int channels,
+                         int bitRate) {
     int ret = -1;
     if (channels != 1 && channels != 2) {
         return ret;
@@ -31,7 +31,7 @@ int Mp3Encoder::Init(const char *pcmFilePath, const char *mp3FilePath, int sampl
     return ret;
 }
 
-void Mp3Encoder::Encode() {
+void LameMp3Encoder::Encode() {
     int bufferSize = 1024 * 256;
     short *buffer = new short[bufferSize / 2];
     short *leftBuffer = NULL;
@@ -68,7 +68,7 @@ void Mp3Encoder::Encode() {
     delete[] mp3_buffer;
 }
 
-void Mp3Encoder::Destroy() {
+void LameMp3Encoder::Destroy() {
     if (pcmFile) {
         fclose(pcmFile);
     }

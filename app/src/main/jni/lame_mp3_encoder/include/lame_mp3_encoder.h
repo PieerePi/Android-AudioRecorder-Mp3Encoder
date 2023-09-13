@@ -1,9 +1,9 @@
-#ifndef PHUKET_TOUR_MP3_ENCODER
-#define PHUKET_TOUR_MP3_ENCODER
+#ifndef PHUKET_TOUR_STUDIO_LAME_MP3_ENCODER
+#define PHUKET_TOUR_STUDIO_LAME_MP3_ENCODER
 
 #include "lame/lame.h"
 
-class Mp3Encoder {
+class LameMp3Encoder {
 private:
     FILE *pcmFile;
     FILE *mp3File;
@@ -11,9 +11,9 @@ private:
     int inChannels;
 
 public:
-    Mp3Encoder();
+    LameMp3Encoder();
 
-    ~Mp3Encoder();
+    ~LameMp3Encoder();
 
     int Init(const char *pcmFilePath, const char *mp3FilePath, int sampleRate, int channels,
              int bitRate);
@@ -23,4 +23,4 @@ public:
     void Destroy();
 };
 
-#endif //PHUKET_TOUR_MP3_ENCODER
+#endif //PHUKET_TOUR_STUDIO_LAME_MP3_ENCODER

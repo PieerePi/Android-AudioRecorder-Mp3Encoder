@@ -5,7 +5,7 @@ include $(CLEAR_VARS)
 
 #LOCAL_C_INCLUDES := $(LOCAL_PATH)/3rdparty/lame/include
 
-LOCAL_SRC_FILES = ./mp3_encoder/src/AudioEncoder.cpp
+LOCAL_SRC_FILES = ./lame_mp3_encoder/src/AudioEncoder.cpp
 
 LOCAL_STATIC_LIBRARIES := mp3_encoder
 #LOCAL_STATIC_LIBRARIES += mp3lame
