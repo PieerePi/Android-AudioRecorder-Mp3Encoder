@@ -147,7 +147,7 @@ public class AudioRecordRecorderService {
         @Override
         public void run() {
             try {
-                Log.e("audiorecorder", MyApplication.getContext().getCacheDir().getAbsolutePath());
+                Log.e("audiorecorder", MyApplication.getContext().getFilesDir().getAbsolutePath());
                 outputStream = MyApplication.getContext().openFileOutput(outputFilePath, Context.MODE_PRIVATE);
                 byte[] audioSamples = new byte[bufferSizeInBytes];
                 while (isRecording) {

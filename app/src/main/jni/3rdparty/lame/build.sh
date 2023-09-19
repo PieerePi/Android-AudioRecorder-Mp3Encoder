@@ -7,7 +7,7 @@ HOST_TAG=windows-x86_64
 TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
 
 #安装目录
-ANDROID_LIB_PATH="$(pwd)/install.dir"
+ANDROID_LIB_PATH="$(pwd)/../install.dir"
 
 ANDROID_API_VERSION=21
 
@@ -15,7 +15,7 @@ ANDROID_API_VERSION=21
 #https://github.com/moorle/lame-android-build/blob/master/build-lame.sh
 TARGET_ARCH_ABI="armeabi-v7a arm64-v8a"
 
-function build_android_arm
+function build_android
 {
 echo "build for android $CPU"
 ./configure \
@@ -49,7 +49,8 @@ do
 	export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
 	export STRIP=$TOOLCHAIN/bin/$TARGET-strip
 	OPTIMIZE_CFLAGS="-march=$CPU"
-	export CFLAGS="-Os -fpic -fdeclspec $OPTIMIZE_CFLAGS -D__ANDROID_API__=$ANDROID_API_VERSION"
-	export CPPFLAGS="-Os -fpic -fdeclspec $OPTIMIZE_CFLAGS -D__ANDROID_API__=$ANDROID_API_VERSION"
-	build_android_arm
+	export CFLAGS="-Os -fPIC -fdeclspec $OPTIMIZE_CFLAGS -D__ANDROID_API__=$ANDROID_API_VERSION"
+	export CPPFLAGS="-Os -fPIC -fdeclspec $OPTIMIZE_CFLAGS -D__ANDROID_API__=$ANDROID_API_VERSION"
+	make distclean
+	build_android
 done
