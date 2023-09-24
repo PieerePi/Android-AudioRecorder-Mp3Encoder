@@ -2,8 +2,12 @@ package com.phuket.tour.audiorecorder;
 
 import com.phuket.tour.studio.LameMp3Encoder;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +22,7 @@ import com.phuket.tour.audiorecorder.recorder.AudioConfigurationException;
 import com.phuket.tour.audiorecorder.recorder.AudioRecordRecorderService;
 import com.phuket.tour.audiorecorder.recorder.StartRecordingException;
 
+import java.io.File;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,6 +51,8 @@ public class AudioRecorderActivity extends AppCompatActivity {
         System.loadLibrary("audioencoder");
     }
 
+    final int REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +71,25 @@ public class AudioRecorderActivity extends AppCompatActivity {
             }
         };
         bindListener();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AudioRecorderActivity.this, new String[]{android.Manifest.permission.RECORD_AUDIO}, REQUEST_CODE);
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // 这里是用户授予或拒绝权限后回调的地方
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "权限开启成功", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "权限开启失败", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void findView() {
@@ -116,7 +142,7 @@ public class AudioRecorderActivity extends AppCompatActivity {
                 return;
             }
             LameMp3Encoder encoder = new LameMp3Encoder();
-            String pcmPath = getFilesDir().getAbsolutePath() + "/" + outputPath;
+            String pcmPath = getExternalFilesDir(null).getAbsolutePath() + File.separator + outputPath;
             int audioChannels;
             if (AudioRecordRecorderService.CHANNEL_CONFIGURATION == AudioFormat.CHANNEL_IN_MONO) {
                 audioChannels = 1;
@@ -128,7 +154,7 @@ public class AudioRecorderActivity extends AppCompatActivity {
             }
             int bitRate = 128 * 1024;
             int sampleRate = 44100;
-            String mp3Path = getFilesDir().getAbsolutePath() + "/" + mp3OutputPath;
+            String mp3Path = getExternalFilesDir(null).getAbsolutePath() + File.separator + mp3OutputPath;
             Log.i(TAG, "input pcm path is " + pcmPath);
             Log.i(TAG, "output mp3 path is " + mp3Path);
             int ret = encoder.init(pcmPath, audioChannels, bitRate, sampleRate, mp3Path);

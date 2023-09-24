@@ -1,11 +1,11 @@
 package com.phuket.tour.audiorecorder.recorder;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -71,16 +71,6 @@ public class AudioRecordRecorderService {
                 bufferSizeInBytes = AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ, CHANNEL_CONFIGURATION,
                         AUDIO_FORMAT);
                 Log.e("audiorecorder3", String.valueOf(bufferSizeInBytes));
-                if (ActivityCompat.checkSelfPermission(MyApplication.getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
                 audioRecord = new AudioRecord(AUDIO_SOURCE, SAMPLE_RATE_IN_HZ, CHANNEL_CONFIGURATION, AUDIO_FORMAT,
                         bufferSizeInBytes);
             } catch (Exception e) {
@@ -147,8 +137,8 @@ public class AudioRecordRecorderService {
         @Override
         public void run() {
             try {
-                Log.e("audiorecorder", MyApplication.getContext().getFilesDir().getAbsolutePath());
-                outputStream = MyApplication.getContext().openFileOutput(outputFilePath, Context.MODE_PRIVATE);
+                Log.e("audiorecorder", MyApplication.getContext().getExternalFilesDir(null).getAbsolutePath());
+                outputStream = new FileOutputStream(new File(MyApplication.getContext().getExternalFilesDir(null).getAbsolutePath() + File.separator + outputFilePath));
                 byte[] audioSamples = new byte[bufferSizeInBytes];
                 while (isRecording) {
                     int audioSampleSize = getAudioRecordBuffer(bufferSizeInBytes, audioSamples);

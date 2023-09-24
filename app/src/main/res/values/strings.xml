@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AudioRecorder</string>
+    <string name="app_name">Recorder</string>
     <string name="record">开始录音</string>
     <string name="stop">停止录音</string>
     <string name="start_audio_recorder">打开录音机</string>

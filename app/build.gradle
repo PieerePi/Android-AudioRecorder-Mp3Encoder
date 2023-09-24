@@ -5,7 +5,6 @@ plugins {
 android {
     namespace 'com.phuket.tour.audiorecorder'
     compileSdk 32
-    ndkVersion "21.4.7075529"
 
     defaultConfig {
         applicationId "com.phuket.tour.audiorecorder"
