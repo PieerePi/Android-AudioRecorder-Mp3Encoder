@@ -24,7 +24,7 @@
         android:text="@string/record"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recorder_time_tip" />
+        app:layout_constraintTop_toBottomOf="@id/recorder_time_tip" />
 
     <Button
         android:id="@+id/mp3_btn"
@@ -34,5 +34,5 @@
         android:text="@string/to_mp3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recorder_btn" />
+        app:layout_constraintTop_toBottomOf="@id/recorder_btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
